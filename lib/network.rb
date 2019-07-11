@@ -4,36 +4,63 @@ class Network
   def initialize(name)
     @name = name
     @shows = []
-    @michael_knight = Character.new({name: "Michael Knight", actor: "David Hasselhoff", salary: 1_600_000})
-    @kitt = Character.new({name: "KITT", actor: "William Daniels", salary: 1_000_000})
-    @knight_rider = Show.new("Knight Rider", "Glen Larson", [@michael_knight, @kitt])
-    @leslie_knope = Character.new({name: "Leslie Knope", actor: "Amy Poehler", salary: 2_000_000})
-    @ron_swanson = Character.new({name: "Ron Swanson", actor: "Nick Offerman", salary: 1_400_000})
-    @parks_and_rec = Show.new("Parks and Recreation", "Michael Shur & Greg Daniels", [@leslie_knope, @ron_swanson])
   end
 
   def add_show(show)
     @shows << show
   end
 
+  # def highest_paid_actor
+  #   all_characters = []
+  #   @shows.each do |show|
+  #     all_characters << show.characters
+  #   end
+  #   highest_paid_character = all_characters.flatten.max_by do |character|
+  #     character.salary
+  #   end
+  #   highest_paid_character.actor
+  # end
+
+  #Another way to do highest paid highest_paid_actor
   def highest_paid_actor
-    all_characters = []
-    @shows.each do |show|
-      all_characters << show.characters
-    end
-    highest_paid_character = all_characters.flatten.max_by do |character|
-      character.salary
-    end
-    highest_paid_character.actor
+    all_characters
+      .max_by { |char| char.salary }
+      .actor
   end
 
+
+  # def payroll
+  #   payroll = Hash.new
+  #   @shows.each do |show|
+  #     show.characters.each do |char|
+  #       payroll[char.actor] = char.salary
+  #     end
+  #   end
+  #   payroll
+  # end
+
+  def all_characters
+    @shows.map { |show| show.characters }.flatten
+  end
+
+  # def payroll
+  #   payroll_hash = Hash.new(0)
+  #   all_characters.each do |char|
+  #     payroll_hash[char.actor] = char.salary
+  #   end
+  #   payroll_hash
+  # end
+
+# NANCY'S CODE UTILIZING .ZIP 
   def payroll
-    payroll = Hash.new
-    @shows.each do |show|
-      show.characters.each do |char|
-        payroll[char.actor] = char.salary
-      end
-    end
-    payroll
+    key_actors = @shows.map(&:characters)
+    .flatten
+    .map(&:actor)
+
+    value_salary = @shows.map(&:characters)
+    .flatten
+    .map(&:salary)
+
+    Hash[key_actors.zip(value_salary)]
   end
 end

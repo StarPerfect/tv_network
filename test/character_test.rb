@@ -11,6 +11,7 @@ class CharacterTest < Minitest::Test
     assert_instance_of Character, @kitt
   end
 
+# attributes test should test all items initialized
   def test_attributes
     assert_equal "KITT", @kitt.name
     assert_equal "William Daniels", @kitt.actor
